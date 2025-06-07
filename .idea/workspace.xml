@@ -7,8 +7,6 @@
     <list default="true" id="27655e08-9f14-443f-93bd-8d406963c94c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/labels.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/sign_lang_train/labels.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/sign_lang.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/sign_lang.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +26,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "project-setup",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
