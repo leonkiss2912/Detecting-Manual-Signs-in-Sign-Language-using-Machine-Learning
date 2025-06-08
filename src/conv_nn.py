@@ -1,27 +1,39 @@
-import torch
 import torch.nn as nn
-import torch.optim as optim
-import torchvision
-import torchvision.transforms as transforms
 import torch.nn.functional as F
-from contracts import contract
+import torch.nn.init as init
 
 class ConvNN(nn.Module):
-    def __init__(self):
-        raise NotImplementedError("ConvNN is not implemented yet. Define dimensions and filters.")
+    def __init__(self, num_classes=36):
         super(ConvNN, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.conv1 = nn.Conv2d(1, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(128*128, 120)
+        self.adaptive_pool = nn.AdaptiveAvgPool2d((5, 5))
+        '''
+            After conv1:        W - F + 1 = 128 - 5 + 1 = 124   (=> 6 Channels of 124x124)
+            After max pooling:  W/2 = 124/2 = 62                (=> 6 Channels of 62x62)
+            After conv2:        W - F + 1 = 62 - 5 + 1 = 58     (=> 16 Channels of 58x58)
+            After adaptive pooling: 16*5*5                      (=> 16 Channels of 5x5)
+        '''
+        self.fc1 = nn.Linear(16*5*5, 120)
         self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 10)
+        self.fc3 = nn.Linear(84, num_classes)
+
+    def init_weights(self):
+        for layer in [self.conv1, self.conv2]:
+            init.kaiming_normal_(layer.weight, mode='fan_out', nonlinearity='relu')
+            if layer.bias is not None:
+                init.constant_(layer.bias, 0)
+        for layer in [self.fc1, self.fc2, self.fc3]:
+            init.xavier_normal_(layer.weight)
+            if layer.bias is not None:
+                init.constant_(layer.bias, 0)
 
     def forward(self, x):
-        raise NotImplementedError("ConvNN is not implemented yet. Define dimensions and filters.")
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 128 * 128)
+        x = self.adaptive_pool(x)
+        x = x.view(-1, 16*5*5)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
